@@ -1,0 +1,42 @@
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBecxw_fWVUyHfiqS-6CDQR0uZQep1D3EI",
+  authDomain: "campus-feedback-92540.firebaseapp.com",
+  projectId: "campus-feedback-92540",
+  storageBucket: "campus-feedback-92540.firebasestorage.app",
+  messagingSenderId: "734163459046",
+  appId: "1:734163459046:web:d999193375852513a71427",
+  measurementId: "G-W395SW51Y7"
+
+  };
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+
+
+ function sendFeedback() {
+  console.log("sendFeedback() called"); // This is the test line
+
+  var cat = document.getElementById("category").value;
+  var rat = document.getElementById("rating").value;
+  var feed = document.getElementById("feedback").value;
+
+  if(cat === "" || rat === "" || feed === "") {
+    alert("Please fill all fields!");
+    return;
+  }
+
+  db.collection("feedbacks").add({
+    category: cat,
+    rating: rat,
+    feedback: feed,
+    time: new Date()
+  })
+  .then(() => {
+    console.log("✅ Feedback Submitted!");
+    document.getElementById("msg").innerText = "✅ Feedback Submitted!";
+  })
+  .catch((error) => {
+    console.error("Error submitting:", error);
+    alert("Error submitting feedback!");
+  });
+}
